@@ -1,12 +1,18 @@
 module vwebview
 
 #flag -I @VROOT/headers
+#flag -I C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0
+#flag -I C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\winrt
 #flag -L .
 #flag windows -lwebview
 #flag windows -lWebView2Loader
-#pkgconfig gtk+-3.0
-#pkgconfig gdk-pixbuf-2.0
-#pkgconfig webkit2gtk-4.0
+
+$if linux {
+	#pkgconfig gtk+-3.0
+	#pkgconfig gdk-pixbuf-2.0
+	#pkgconfig webkit2gtk-4.0
+}
+
 //#flag -DWEBVIEW_HEADER
 #include "webview.h"
 
