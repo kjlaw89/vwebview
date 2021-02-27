@@ -1,12 +1,13 @@
 module vwebview
 
-//#flag -I C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0
 #flag -I @VROOT/headers
 #flag -L .
-//#flag windows -ldflags="-H windowsgui"
-#flag -lwebview
-#flag -lWebView2Loader
-#flag -DWEBVIEW_HEADER
+#flag windows -lwebview
+#flag windows -lWebView2Loader
+#pkgconfig gtk+-3.0
+#pkgconfig gdk-pixbuf-2.0
+#pkgconfig webkit2gtk-4.0
+//#flag -DWEBVIEW_HEADER
 #include "webview.h"
 
 [noinit]
@@ -41,17 +42,15 @@ pub struct WebviewConfig {
 
 // new takes in a config and initializes a new webview with the provided settings
 pub fn new(config WebviewConfig) ?Webview {
-	println("in new")
 	webview := Webview{ ptr: C.webview_create(if config.debug { 1 } else { 0 }, config.window_ptr) }
-	println("created new")
 	
 	if webview.ptr == 0 {
 		return error("Unable to initialize webview")
 	}
 
-	/*webview.navigate(config.url)
+	webview.navigate(config.url)
 	webview.set_size(config.width, config.height, config.size_hint)
-	webview.set_title(config.title)*/
+	webview.set_title(config.title)
 
 	return webview
 }
